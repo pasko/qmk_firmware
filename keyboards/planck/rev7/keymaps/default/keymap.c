@@ -20,6 +20,9 @@ enum planck_layers { _QWERTY, _COLEMAK, _DVORAK, _LOWER, _RAISE, _PLOVER, _ADJUS
 
 enum planck_keycodes { QWERTY = SAFE_RANGE, COLEMAK, DVORAK, PLOVER, BACKLIT, EXT_PLV };
 
+// Use the "back light" button at the bottom left corner as Fn.
+#define FN_LEFT BACKLIT
+
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
@@ -166,6 +169,7 @@ layer_state_t layer_state_set_user(layer_state_t state) {
 }
 
 bool process_record_user(uint16_t keycode, keyrecord_t *record) {
+    static bool fn_pressed = false;
     switch (keycode) {
         case QWERTY:
             if (record->event.pressed) {
@@ -186,13 +190,31 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
             }
             return false;
             break;
-        case BACKLIT:
+        case FN_LEFT:
             if (record->event.pressed) {
-                register_code(KC_RSFT);
+                fn_pressed = true;
+                return false;
             } else {
-                unregister_code(KC_RSFT);
+                // The key was released.
+                fn_pressed = false;
+                return false;
             }
-            return false;
+            break;
+        case KC_RIGHT:
+            if (record->event.pressed) {
+                if (fn_pressed) {
+                    SEND_STRING(SS_LCTL("an"));
+                    return false;
+                }
+            }
+            break;
+        case KC_LEFT:
+            if (record->event.pressed) {
+                if (fn_pressed) {
+                    SEND_STRING(SS_LCTL("ap"));
+                    return false;
+                }
+            }
             break;
         case PLOVER:
             if (record->event.pressed) {
