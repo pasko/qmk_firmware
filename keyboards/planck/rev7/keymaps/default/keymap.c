@@ -250,13 +250,13 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
 
 /* clang-format off */
 float melody[8][2][2] = {
-    {{440.0f, 8}, {440.0f, 24}}, 
-    {{440.0f, 8}, {440.0f, 24}}, 
-    {{440.0f, 8}, {440.0f, 24}}, 
-    {{440.0f, 8}, {440.0f, 24}}, 
-    {{440.0f, 8}, {440.0f, 24}}, 
-    {{440.0f, 8}, {440.0f, 24}}, 
-    {{440.0f, 8}, {440.0f, 24}}, 
+    {{440.0f, 8}, {440.0f, 24}},
+    {{440.0f, 8}, {440.0f, 24}},
+    {{440.0f, 8}, {440.0f, 24}},
+    {{440.0f, 8}, {440.0f, 24}},
+    {{440.0f, 8}, {440.0f, 24}},
+    {{440.0f, 8}, {440.0f, 24}},
+    {{440.0f, 8}, {440.0f, 24}},
     {{440.0f, 8}, {440.0f, 24}},
 };
 /* clang-format on */
@@ -273,7 +273,7 @@ float melody[8][2][2] = {
 #define ET12_MAJOR_THIRD 1.259921
 #define ET12_PERFECT_FOURTH 1.33484
 #define ET12_TRITONE 1.414214
-#define ET12_PERFECT_FIFTH 1.498307	
+#define ET12_PERFECT_FIFTH 1.498307
 
 deferred_token tokens[8];
 
