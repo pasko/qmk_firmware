@@ -23,6 +23,23 @@ enum planck_keycodes { QWERTY = SAFE_RANGE, COLEMAK, DVORAK, PLOVER, BACKLIT, EX
 // Use the "back light" button at the bottom left corner as Fn.
 #define FN_LEFT BACKLIT
 
+// TODO: Assign SPACE as a modifier turning on this layer:
+/*  Inspired by Miryoku Nav:
+ *      https://github.com/manna-harbour/miryoku/tree/master/docs/reference#nav
+ *  name: _NAV
+ *  LT(_NAV, KC_SPC) <- holding the space switches to the new layer, otherwise
+ *                      just Space
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      | Left | Down |  Up  | Right|      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
 
