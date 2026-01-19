@@ -203,7 +203,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_RIGHT:
             if (record->event.pressed) {
                 if (fn_pressed) {
-                    SEND_STRING(SS_LCTL("an"));
+                    SEND_STRING(SS_LCTL(SS_TAP(X_TAB)));
                     return false;
                 }
             }
@@ -211,7 +211,7 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case KC_LEFT:
             if (record->event.pressed) {
                 if (fn_pressed) {
-                    SEND_STRING(SS_LCTL("ap"));
+                    SEND_STRING(SS_LCTL(SS_LSFT(SS_TAP(X_TAB))));
                     return false;
                 }
             }
