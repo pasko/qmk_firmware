@@ -16,29 +16,12 @@
 
 #include QMK_KEYBOARD_H
 
-enum planck_layers { _QWERTY, _COLEMAK, _DVORAK, _LOWER, _RAISE, _PLOVER, _ADJUST };
+enum planck_layers { _QWERTY, _COLEMAK, _DVORAK, _LOWER, _RAISE, _PLOVER, _ADJUST, _NAV };
 
-enum planck_keycodes { QWERTY = SAFE_RANGE, COLEMAK, DVORAK, PLOVER, BACKLIT, EXT_PLV };
+enum planck_keycodes { QWERTY = SAFE_RANGE, COLEMAK, DVORAK, PLOVER, BACKLIT, EXT_PLV, NAV_ON };
 
 // Use the "back light" button at the bottom left corner as Fn.
 #define FN_LEFT BACKLIT
-
-// TODO: Assign SPACE as a modifier turning on this layer:
-/*  Inspired by Miryoku Nav:
- *      https://github.com/manna-harbour/miryoku/tree/master/docs/reference#nav
- *  name: _NAV
- *  LT(_NAV, KC_SPC) <- holding the space switches to the new layer, otherwise
- *                      just Space
- * ,-----------------------------------------------------------------------------------.
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      | Left | Down |  Up  | Right|      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |      |      |      |      |      |      |      |
- * |------+------+------+------+------+------+------+------+------+------+------+------|
- * |      |      |      |      |      |             |      |      |      |      |      |
- * `-----------------------------------------------------------------------------------'
- */
 
 #define LOWER MO(_LOWER)
 #define RAISE MO(_RAISE)
@@ -113,7 +96,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 [_LOWER] = LAYOUT_planck_grid(
     KC_TILD, KC_EXLM, KC_AT,   KC_HASH, KC_DLR,  KC_PERC, KC_CIRC, KC_AMPR,    KC_ASTR,    KC_LPRN, KC_RPRN, KC_BSPC,
-    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   KC_F4,   KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE,
+    KC_DEL,  KC_F1,   KC_F2,   KC_F3,   NAV_ON,  KC_F5,   KC_F6,   KC_UNDS,    KC_PLUS,    KC_LCBR, KC_RCBR, KC_PIPE,
     _______, KC_F7,   KC_F8,   KC_F9,   KC_F10,  KC_F11,  KC_F12,  S(KC_NUHS), S(KC_NUBS), KC_HOME, KC_END,  _______,
     _______, _______, _______, _______, _______, _______, _______, _______,    KC_MNXT,    KC_VOLD, KC_VOLU, KC_MPLY
 ),
@@ -171,6 +154,27 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
     _______, EE_CLR,  MU_NEXT, AU_ON,   AU_OFF,  AG_NORM, AG_SWAP, QWERTY,  COLEMAK, DVORAK,  PLOVER,  _______,
     _______, AU_PREV, AU_NEXT, MU_ON,   MU_OFF,  MI_ON,   MI_OFF,  _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______, _______
+),
+
+/* Navigation (Lower + f, <space> to go back)
+ *  Inspired by Miryoku Nav:
+ *      https://github.com/manna-harbour/miryoku/tree/master/docs/reference#nav
+ * ,-----------------------------------------------------------------------------------.
+ * |      |      |      | MsUp |      |      |      |MsBtn1|MsBtn2|MsBtn3|      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |MsLeft|MsDown|MsRght|      | Left | Down |  Up  | Right|      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |      |      |      |      |      |      |      |
+ * |------+------+------+------+------+------+------+------+------+------+------+------|
+ * |      |      |      |      |      |             |      |      |      |      |      |
+ * `-----------------------------------------------------------------------------------'
+ */
+
+[_NAV] = LAYOUT_planck_grid(
+    _______, _______, _______, KC_MS_U, _______, _______, _______,  KC_BTN1, KC_BTN3, KC_BTN2, _______, _______,
+    _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, KC_LEFT,  KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
+    _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,
+    _______, _______, _______, _______, _______, _______, TG(_NAV), _______, _______, _______, _______, _______
 )
 
 };
@@ -204,6 +208,12 @@ bool process_record_user(uint16_t keycode, keyrecord_t *record) {
         case DVORAK:
             if (record->event.pressed) {
                 set_single_persistent_default_layer(_DVORAK);
+            }
+            return false;
+            break;
+        case NAV_ON:
+            if (record->event.pressed) {
+                layer_on(_NAV);
             }
             return false;
             break;
