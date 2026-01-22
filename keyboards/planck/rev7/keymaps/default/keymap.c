@@ -160,7 +160,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  *  Inspired by Miryoku Nav:
  *      https://github.com/manna-harbour/miryoku/tree/master/docs/reference#nav
  * ,-----------------------------------------------------------------------------------.
- * |      |      |      | MsUp |      |      |      |MsBtn1|MsBtn2|MsBtn3|      |      |
+ * |      |      |WhlUp | MsUp |WhlDn |      |      |MsBtn1|MsBtn2|MsBtn3|      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
  * |      |      |MsLeft|MsDown|MsRght|      | Left | Down |  Up  | Right|      |      |
  * |------+------+------+------+------+------+------+------+------+------+------+------|
@@ -171,7 +171,7 @@ const uint16_t PROGMEM keymaps[][MATRIX_ROWS][MATRIX_COLS] = {
  */
 
 [_NAV] = LAYOUT_planck_grid(
-    _______, _______, _______, KC_MS_U, _______, _______, _______,  KC_BTN1, KC_BTN3, KC_BTN2, _______, _______,
+    _______, _______, KC_WH_U, KC_MS_U, KC_WH_D, _______, _______,  KC_BTN1, KC_BTN3, KC_BTN2, _______, _______,
     _______, _______, KC_MS_L, KC_MS_D, KC_MS_R, _______, KC_LEFT,  KC_DOWN, KC_UP,   KC_RGHT, _______, _______,
     _______, _______, _______, _______, _______, _______, _______,  _______, _______, _______, _______, _______,
     _______, _______, _______, _______, _______, _______, TG(_NAV), _______, _______, _______, _______, _______
